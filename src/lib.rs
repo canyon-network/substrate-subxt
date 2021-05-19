@@ -565,10 +565,11 @@ impl<T: Runtime> Client<T> {
     }
 
     /// Creates a signed data extrinsic.
-    pub async fn create_data_signed<C: Call<T> + Send + Sync>(
+    pub async fn create_signed_with_data<C: Call<T> + Send + Sync>(
         &self,
         call: C,
         signer: &(dyn Signer<T> + Send + Sync),
+        data: Vec<u8>
     ) -> Result<UncheckedExtrinsic<T>, Error>
     where
         <<T::Extra as SignedExtra<T>>::Extra as SignedExtension>::AdditionalSigned:
@@ -580,12 +581,13 @@ impl<T: Runtime> Client<T> {
             self.account(signer.account_id(), None).await?.nonce
         };
         let call = self.encode(call)?;
-        let signed = extrinsic::create_data_signed(
+        let signed = extrinsic::create_signed_with_data(
             &self.runtime_version,
             self.genesis_hash,
             account_nonce,
             call,
             signer,
+            data
         )
         .await?;
         Ok(signed)
@@ -633,12 +635,13 @@ impl<T: Runtime> Client<T> {
         &self,
         call: C,
         signer: &(dyn Signer<T> + Send + Sync),
+        data: Vec<u8>
     ) -> Result<T::Hash, Error>
     where
         <<T::Extra as SignedExtra<T>>::Extra as SignedExtension>::AdditionalSigned:
             Send + Sync,
     {
-        let extrinsic = self.create_data_signed(call, signer).await?;
+        let extrinsic = self.create_signed_with_data(call, signer, data).await?;
         self.submit_extrinsic(extrinsic).await
     }
 
