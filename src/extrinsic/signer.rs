@@ -56,6 +56,7 @@ pub trait Signer<T: Runtime> {
     async fn sign_with_data(
         &self,
         extrinsic: SignedPayload<T>,
+        data: Vec<u8>
     ) -> Result<UncheckedExtrinsic<T>, String>;
 
 }
@@ -138,6 +139,7 @@ where
     async fn sign_with_data(
         &self,
         extrinsic: SignedPayload<T>,
+        data: Vec<u8>
     ) -> Result<UncheckedExtrinsic<T>, String> {
         let signature = extrinsic.using_encoded(|payload| self.signer.sign(payload));
         let (call, extra, _) = extrinsic.deconstruct();
@@ -147,7 +149,7 @@ where
             signature.into(),
             extra,
             // TODO: pass the data properly.
-            Some(b"mocked data".to_vec().into())
+            Some(data.into())
         );
         Ok(extrinsic)
     }
