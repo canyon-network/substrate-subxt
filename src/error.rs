@@ -117,6 +117,9 @@ pub enum RuntimeError {
     /// Other error.
     #[error("Other error: {0}")]
     Other(String),
+    /// Arithmatic error.
+    #[error("Arithmetic error")]
+    Arithmetic,
 }
 
 impl RuntimeError {
@@ -144,6 +147,7 @@ impl RuntimeError {
             DispatchError::NoProviders => Ok(Self::NoProviders),
             DispatchError::Other(msg) => Ok(Self::Other(msg.into())),
             DispatchError::Token(_) => Ok(Self::TokenError),
+            DispatchError::Arithmetic(_) => Ok(Self::Arithmetic),
         }
     }
 }
