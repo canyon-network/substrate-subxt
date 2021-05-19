@@ -120,6 +120,9 @@ pub enum RuntimeError {
     /// Other error.
     #[error("Other error: {0}")]
     Other(String),
+    /// Arithmatic error.
+    #[error("Arithmetic error")]
+    Arithmetic,
 }
 
 impl RuntimeError {
