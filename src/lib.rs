@@ -564,6 +564,33 @@ impl<T: Runtime> Client<T> {
         Ok(signed)
     }
 
+    /// Creates a signed data extrinsic.
+    pub async fn create_data_signed<C: Call<T> + Send + Sync>(
+        &self,
+        call: C,
+        signer: &(dyn Signer<T> + Send + Sync),
+    ) -> Result<UncheckedExtrinsic<T>, Error>
+    where
+        <<T::Extra as SignedExtra<T>>::Extra as SignedExtension>::AdditionalSigned:
+            Send + Sync,
+    {
+        let account_nonce = if let Some(nonce) = signer.nonce() {
+            nonce
+        } else {
+            self.account(signer.account_id(), None).await?.nonce
+        };
+        let call = self.encode(call)?;
+        let signed = extrinsic::create_data_signed(
+            &self.runtime_version,
+            self.genesis_hash,
+            account_nonce,
+            call,
+            signer,
+        )
+        .await?;
+        Ok(signed)
+    }
+
     /// Returns the events decoder.
     pub fn events_decoder(&self) -> &EventsDecoder<T> {
         &self.events_decoder
@@ -598,6 +625,20 @@ impl<T: Runtime> Client<T> {
             Send + Sync,
     {
         let extrinsic = self.create_signed(call, signer).await?;
+        self.submit_extrinsic(extrinsic).await
+    }
+
+    /// Submits a data transaction to the chain.
+    pub async fn submit_with_data<C: Call<T> + Send + Sync>(
+        &self,
+        call: C,
+        signer: &(dyn Signer<T> + Send + Sync),
+    ) -> Result<T::Hash, Error>
+    where
+        <<T::Extra as SignedExtra<T>>::Extra as SignedExtension>::AdditionalSigned:
+            Send + Sync,
+    {
+        let extrinsic = self.create_data_signed(call, signer).await?;
         self.submit_extrinsic(extrinsic).await
     }
 

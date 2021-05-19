@@ -48,6 +48,16 @@ pub trait Signer<T: Runtime> {
         &self,
         extrinsic: SignedPayload<T>,
     ) -> Result<UncheckedExtrinsic<T>, String>;
+
+    /// Takes an unsigned extrinsic and returns a signed extrinsic.
+    ///
+    /// Some signers may fail, for instance because the hardware on which the keys are located has
+    /// refused the operation.
+    async fn sign_with_data(
+        &self,
+        extrinsic: SignedPayload<T>,
+    ) -> Result<UncheckedExtrinsic<T>, String>;
+
 }
 
 /// Extrinsic signer using a private key.
@@ -124,4 +134,22 @@ where
         );
         Ok(extrinsic)
     }
+
+    async fn sign_with_data(
+        &self,
+        extrinsic: SignedPayload<T>,
+    ) -> Result<UncheckedExtrinsic<T>, String> {
+        let signature = extrinsic.using_encoded(|payload| self.signer.sign(payload));
+        let (call, extra, _) = extrinsic.deconstruct();
+        let extrinsic = UncheckedExtrinsic::<T>::new_data_signed(
+            call,
+            self.account_id.clone().into(),
+            signature.into(),
+            extra,
+            // TODO: pass the data properly.
+            Some(b"mocked data".to_vec().into())
+        );
+        Ok(extrinsic)
+    }
+
 }
