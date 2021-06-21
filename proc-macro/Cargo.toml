@@ -32,7 +32,7 @@ pretty_assertions = "0.6.1"
 substrate-subxt = { path = ".." }
 trybuild = "1.0.38"
 
-sp-keyring = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
+sp-keyring = { git = "https://github.com/canyon-network/substrate", branch = "w3f-grant-1" }
 
 [[test]]
 name = "balances"
