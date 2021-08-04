@@ -80,28 +80,6 @@ where
     Ok(signed)
 }
 
-/// Creates a signed data extrinsic.
-pub async fn create_signed_with_data<T>(
-    runtime_version: &RuntimeVersion,
-    genesis_hash: T::Hash,
-    nonce: T::Index,
-    call: Encoded,
-    signer: &(dyn Signer<T> + Send + Sync),
-    data: Vec<u8>,
-) -> Result<UncheckedExtrinsic<T>, Error>
-where
-    T: Runtime,
-    <<T::Extra as SignedExtra<T>>::Extra as SignedExtension>::AdditionalSigned:
-        Send + Sync,
-{
-    let spec_version = runtime_version.spec_version;
-    let tx_version = runtime_version.transaction_version;
-    let extra: T::Extra = T::Extra::new(spec_version, tx_version, nonce, genesis_hash);
-    let payload = SignedPayload::<T>::new(call, extra.extra())?;
-    let signed = signer.sign_with_data(payload, data).await?;
-    Ok(signed)
-}
-
 /// Creates an unsigned extrinsic
 pub fn create_unsigned<T>(call: Encoded) -> UncheckedExtrinsic<T>
 where

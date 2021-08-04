@@ -62,7 +62,6 @@ env_logger = "0.8.3"
 tempdir = "0.3.7"
 wabt = "0.10.0"
 which = "4.0.2"
-sp-keyring = "3.0.0"
 frame-system = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
 pallet-balances = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
 sp-keyring = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
