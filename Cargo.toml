@@ -43,17 +43,17 @@ url = "2.2.1"
 substrate-subxt-client = { version = "0.7.0", path = "client", optional = true }
 substrate-subxt-proc-macro = { version = "0.15.0", path = "proc-macro" }
 
-sp-application-crypto = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
-sp-core = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
-sp-rpc = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
-sp-runtime = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
-sp-std = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
-sp-version = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
+sp-application-crypto = { git = "https://github.com/paritytech/substrate", rev = "c7a6264758ddee13e06908aaf3444febd580a7b4" }
+sp-core = { git = "https://github.com/paritytech/substrate", rev = "c7a6264758ddee13e06908aaf3444febd580a7b4" }
+sp-rpc = { git = "https://github.com/paritytech/substrate", rev = "c7a6264758ddee13e06908aaf3444febd580a7b4" }
+sp-runtime = { git = "https://github.com/paritytech/substrate", rev = "c7a6264758ddee13e06908aaf3444febd580a7b4" }
+sp-std = { git = "https://github.com/paritytech/substrate", rev = "c7a6264758ddee13e06908aaf3444febd580a7b4" }
+sp-version = { git = "https://github.com/paritytech/substrate", rev = "c7a6264758ddee13e06908aaf3444febd580a7b4" }
 
-frame-metadata = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
-frame-support = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
-pallet-indices = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
-pallet-staking = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
+frame-metadata = { git = "https://github.com/paritytech/substrate", rev = "c7a6264758ddee13e06908aaf3444febd580a7b4" }
+frame-support = { git = "https://github.com/paritytech/substrate", rev = "c7a6264758ddee13e06908aaf3444febd580a7b4" }
+pallet-indices = { git = "https://github.com/paritytech/substrate", rev = "c7a6264758ddee13e06908aaf3444febd580a7b4" }
+pallet-staking = { git = "https://github.com/paritytech/substrate", rev = "c7a6264758ddee13e06908aaf3444febd580a7b4" }
 
 [dev-dependencies]
 assert_matches = "1.5.0"
@@ -62,6 +62,6 @@ env_logger = "0.8.3"
 tempdir = "0.3.7"
 wabt = "0.10.0"
 which = "4.0.2"
-frame-system = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
-pallet-balances = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
-sp-keyring = { git = "https://github.com/canyon-network/substrate", branch = "canyon" }
+frame-system = { git = "https://github.com/paritytech/substrate", rev = "c7a6264758ddee13e06908aaf3444febd580a7b4" }
+pallet-balances = { git = "https://github.com/paritytech/substrate", rev = "c7a6264758ddee13e06908aaf3444febd580a7b4" }
+sp-keyring = { git = "https://github.com/paritytech/substrate", rev = "c7a6264758ddee13e06908aaf3444febd580a7b4" }
